@@ -1,0 +1,58 @@
+.container {
+  display: flex;
+  height: 100%;
+}
+
+.motorContainer {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  margin-bottom: var(--spacing);
+  flex: 1;
+  justify-content: center;
+}
+
+.sliderContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.throttleContainer {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.throttleContainer input {
+  width: 100px;
+  height: 30px;
+}
+
+.title {
+  display: flex;
+  font-size: 24px;
+  justify-content: center;
+  margin-top: var(--spacing);
+}
+
+.speed {
+  width: 60px;
+  font-size: 36px;
+}
+
+.slider {
+  -webkit-appearance: slider-vertical;
+  height: 250px;
+  width: 48px;
+}
+
+.pressed {
+  box-shadow: inset 0px 0px 16px 2px rgba(0, 0, 0, 0.75);
+  background-color: #2ecc40;
+  color: #ffffff;
+}
+.notPressed {
+  background-color: #F0F0F0
+}

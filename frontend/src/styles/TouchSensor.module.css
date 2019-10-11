@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 48px;
+}
+
+.pressed {
+  box-shadow: inset 0px 0px 16px 2px rgba(0, 0, 0, 0.75);
+  background-color: #2ecc40;
+}
+.notPressed {
+  background-color: #ff851b;
+}

@@ -1,0 +1,28 @@
+.container {
+  width: calc(50% - var(--largeSpacing));
+  padding: var(--largeSpacing);
+  margin: 0 var(--largeSpacing) var(--largeSpacing) 0;
+  box-sizing: border-box;
+  height: calc(
+    50vh - var(--largeSpacing) - var(--footerSize) / 2 - var(--largeSpacing) / 2
+  );
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.4) 3px 4px 6px 0px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 32px;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: var(--largeSpacing);
+  padding: var(--smallSpacing);
+  font-family: 'Roboto', sans-serif;
+}
+
+.contents {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 18px;
+  flex: 1;
+}

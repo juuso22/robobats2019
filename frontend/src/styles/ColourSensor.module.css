@@ -1,0 +1,44 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.buttonContainer {
+  display: flex;
+}
+
+.dropdownContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing);
+}
+
+.dropdownTitle {
+  display: flex;
+  width: 80px;
+  align-items: center;
+}
+
+.dropdown {
+  flex: 1;
+}
+
+.colourContainer {
+  flex: 1;
+  display: flex;
+  margin-bottom: var(--spacing);
+}
+
+.colour {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.colourText {
+  justify-content: center;
+  filter: invert(100%);
+  font-size: 48px;
+}

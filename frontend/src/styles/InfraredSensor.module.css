@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 36px;
+  flex-direction: column;
+}
+
+.barContainer {
+  display: flex;
+  font-size: 16px;
+  align-items: center;
+}
+
+.barBackground {
+  height: 8px;
+  background-color: #eaeaea;
+  width: 300px;
+  margin: var(--spacing);
+}
+
+.bar {
+  background-color: #9a9aff;
+  height: 100%;
+}
