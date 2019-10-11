@@ -1,0 +1,54 @@
+<!doctype html>
+<head>
+    <title>Robot</title>
+    <script>
+        window.onload = () => {
+            let socket = null
+            let connect = () => {
+                document.getElementById('connect').disabled = true
+                document.getElementById('connect').innerText = 'Connecting...'
+                socket = new WebSocket('ws://' + window.location.hostname + ':9000')
+                socket.onerror = () => {
+                    setTimeout(connect, 250)
+                }
+                socket.onopen = () => {
+                    document.getElementById('connect').disabled = false
+                    document.getElementById('connect').innerText = 'Disconnect'
+                    document.getElementById('controls').hidden = false
+                }
+                socket.onmessage = event => {
+                    document.getElementById('color').innerText = event.data
+                }
+            }
+            document.getElementById('connect').addEventListener('click', () => {
+                if (socket == null) {
+                    connect()
+                } else {
+                    socket.close()
+                    socket = null
+                    document.getElementById('connect').innerText = 'Connect'
+                    document.getElementById('controls').hidden = true
+                }
+            })
+            document.getElementById('go').addEventListener('mousedown', () => {
+                socket.send('go')
+            })
+            document.getElementById('go').addEventListener('mouseup', () => {
+                socket.send('stay')
+            })
+        }
+    </script>
+</head>
+<body>
+    <p>
+        <button id='connect'>Connect</button>
+    </p>
+    <div id='controls' hidden=true>
+        <p>
+            Color: <span id='color'></span>
+        </p>
+        <p>
+            <button id='go'>Go</button>
+        </p>
+    </div>
+</body>
