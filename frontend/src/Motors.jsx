@@ -3,32 +3,59 @@ import cx from 'classnames';
 
 import styles from './styles/Motors.module.css';
 
-const Motors = ({ motorData, onChangeLeftValue, onChangeRightValue, onChangeLeftSpeed, onChangeRightSpeed, onChangeThrottle }) => (
+const Motors = ({
+  motorData,
+  onChangeSpeedValue,
+  onChangeSpeed,
+  onKeyDown,
+  onKeyUp
+}) => (
   <div className={styles.container}>
-    <Motor
-      title="Left"
-      speed={motorData.left}
-      onValueChange={onChangeLeftValue}
-      onSpeedChange={onChangeLeftSpeed}
-    />
-    <div className={styles.throttleContainer}>
-      <input type="button"
-             className={cx({
-              [styles.pressed]: motorData.throttle,
-              [styles.notPressed]: !motorData.throttle,})}
-             value={motorData.throttle ? 'Motor On' : 'Motor Off'}  
-             onClick={onChangeThrottle} />
+    <div className={styles.steeringButtonsContainer}>
+      <div className={styles.upDownButtonContainer}>
+        <input
+          id="w"
+          type="button"
+          value="&uarr;"
+          onMouseDown={onKeyDown}
+          onMouseUp={onKeyUp}
+        />
+      </div>
+      <div className={styles.middleButtonsContainer}>
+        <input
+          id="a"
+          type="button"
+          value="&larr;"
+          onMouseDown={onKeyDown}
+          onMouseUp={onKeyUp}
+        />
+        <input
+          id="s"
+          type="button"
+          value="&rarr;"
+          onMouseDown={onKeyDown}
+          onMouseUp={onKeyUp}
+        />
+      </div>
+      <div className={styles.upDownButtonContainer}>
+        <input
+          id="d"
+          type="button"
+          value="&darr;"
+          onMouseDown={onKeyDown}
+          onMouseUp={onKeyUp}
+        />
+      </div>
     </div>
-    <Motor
-      title="Right"
-      speed={motorData.right}
-      onValueChange={onChangeRightValue}
-      onSpeedChange={onChangeRightSpeed}
-    />
   </div>
 );
 
-const Motor = ({ speed, onValueChange, onSpeedChange, title }) => (
+const Motor = ({
+  speed,
+  onValueChange,
+  onSpeedChange,
+  title,
+}) => (
   <div className={styles.motorContainer}>
     <div className={styles.sliderContainer}>
       <input

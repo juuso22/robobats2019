@@ -1,6 +1,26 @@
 .container {
   display: flex;
+  flex-direction: column;
   height: 100%;
+}
+
+.steeringButtonsContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.upDownButtonContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.middleButtonsContainer {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
 }
 
 .motorContainer {
@@ -44,7 +64,7 @@
 
 .slider {
   -webkit-appearance: slider-vertical;
-  height: 250px;
+  height: 100%;
   width: 48px;
 }
 

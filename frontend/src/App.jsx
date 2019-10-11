@@ -7,8 +7,9 @@ import TouchSensor from './TouchSensor.jsx';
 import Motors from './Motors.jsx';
 
 import styles from './styles/App.module.css';
+import { Stream } from 'stream';
 
-const ROBOT_IP_ADDR = '10.10.90.209';
+const ROBOT_IP_ADDR = '192.168.2.2';
 const ROBOT_PORT = 9000;
 
 const robotUri = `ws://${ROBOT_IP_ADDR}:${ROBOT_PORT}`;
@@ -98,6 +99,24 @@ class App extends React.Component {
     );
   };
 
+  onMotorMove = data => {
+    const steering = {
+      type: 'MOVE',
+      move: data.target.id,
+    };
+    console.log(steering);
+    websocket.send(JSON.stringify(steering));
+  }
+
+  onMotorStop = () => {
+    const steering = {
+      type: 'MOVE',
+      move: 'stop',
+    };
+    console.log(steering);
+    websocket.send(JSON.stringify(steering));
+  }
+
   onRightMotorSpeedChanged = () => {
     this.sendCommand('MOVETANK', this.state.data.motors);
   };
@@ -167,6 +186,8 @@ class App extends React.Component {
           onChangeLeftSpeed={this.onLeftMotorSpeedChanged}
           onChangeRightSpeed={this.onRightMotorSpeedChanged}
           onChangeThrottle={this.onThrottleChanged}
+          onKeyDown={this.onMotorMove}
+          onKeyUp={this.onMotorStop}
         />,
       ],
     ];
