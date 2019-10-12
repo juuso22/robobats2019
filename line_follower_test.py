@@ -16,38 +16,35 @@ class LineFollowerTest:
     RIGHT = 1
     VEERING_THRESHOLD = 10000  # Veering off
 
-    last_search_direction = 1
-    last_brightness = 1000
-
     def __init__(self, movesteering, colorsensor):
         self.steering_drive = movesteering
         self.color_sensor = colorsensor
+        self.last_search_direction = 1
+        self.last_brightness = 1000
 
     def on_track(self):
-        global last_brightness
+        global self.last_brightness
         red = self.color_sensor.red
         green = self.color_sensor.green
         blue = self.color_sensor.blue
 
-        last_brightness = red + green + blue
+        self.last_brightness = red + green + blue
 
         color = self.color_sensor.color
         return color == 6
 
     def move_while_on_track(self, direction, speed):
-        global last_brightness
-        global last_search_direction
-        last_brightness = 1000
-        brightness = last_brightness
+        self.last_brightness = 1000
+        brightness = self.last_brightness
         self.steering_drive.on_for_seconds(0, SpeedPercent(-speed), LineFollowerTest.TIME_STEP * LineFollowerTest.STEPS_PER_SECOND * 10, False, False)
         while self.on_track():
-            print(last_brightness)
+            print(self.last_brightness)
             effective_direction = direction
-            if last_brightness < brightness - LineFollowerTest.VEERING_THRESHOLD:
-                effective_direction = last_search_direction * 10
-                print('Veering ' + direction_name(last_search_direction))
+            if self.last_brightness < brightness - LineFollowerTest.VEERING_THRESHOLD:
+                effective_direction = self.last_search_direction * 10
+                print('Veering ' + direction_name(self.last_search_direction))
             #self.steering_drive.on_for_seconds(effective_direction, SpeedPercent(-speed), LineFollowerTest.TIME_STEP, False)
-            brightness = last_brightness
+            brightness = self.last_brightness
 
         self.steering_drive.off(None, False)
 
@@ -84,12 +81,12 @@ class LineFollowerTest:
         return False
 
     def find_line(self, max_turn_steps):
-        global last_search_direction
-        if self.turn_and_seek(max_turn_steps, last_search_direction):
+        global self.last_search_direction
+        if self.turn_and_seek(max_turn_steps, self.last_search_direction):
             return True
 
-        if self.turn_and_seek(max_turn_steps, -last_search_direction):
-            last_search_direction = -last_search_direction
+        if self.turn_and_seek(max_turn_steps, -self.last_search_direction):
+            self.last_search_direction = -self.last_search_direction
             return True
 
         return False
