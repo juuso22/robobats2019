@@ -2,44 +2,48 @@ import asyncio
 import websockets
 import json
 from asyncio import TimeoutError
-from websockets.exceptions import ConnectionClosed
+from ev3dev2.motor import MoveSteering, MediumMotor, OUTPUT_A, OUTPUT_B, OUTPUT_C
 
-class RemoteControl():
 
-    def __init__(self, socket, movesteering, fork):
-        self.socket = socket
-        self.movesteering = movesteering
-        self.fork = fork
+async def on_connect(socket, path):
+    movesteering = MoveSteering(OUTPUT_A, OUTPUT_B)
+    fork = MediumMotor(OUTPUT_C)
 
-    def start(self):
-        print("remote control enabled")
+    while True:
+        try:
+            raw_cmd = await asyncio.wait_for(socket.recv(), timeout=500)
+            if raw_cmd != "":
+                command = json.loads(raw_cmd)
+                command_type = command['type']
 
-    def run(self, raw_cmd):
-        if raw_cmd != "":
-            command = json.loads(raw_cmd)
-            command_type = command['type']
+                print("MOVE COMMAND")
+                print(command)
+                if command_type == 'MOVE':
+                    move = command['move']
 
-            print("MOVE COMMAND")
-            print(command)
-            if command_type == 'MOVE':
-                move = command['move']
+                    if move == 'w':
+                        movesteering.on(0, 100)
+                    elif move == 's':
+                        movesteering.on(0, -100)
+                    elif move == 'a':
+                        movesteering.on(100, 100)
+                    elif move == 'd':
+                        movesteering.on(-100, 100)
+                    elif move == 't':
+                        fork.on(-100)
+                    elif move == 'g':
+                        fork.on(100)
+                    elif move == 'stop':
+                        movesteering.off()
+                        fork.off()
+        except TimeoutError:
+            pass
 
-                if move == 'w':
-                    self.movesteering.on(0, 100)
-                elif move == 's':
-                    self.movesteering.on(0, -100)
-                elif move == 'a':
-                    self.movesteering.on(100, 100)
-                elif move == 'd':
-                    self.movesteering.on(-100, 100)
-                elif move == 't':
-                    self.fork.on(-100)
-                elif move == 'g':
-                    self.fork.on(100)
-                elif move == 'stop':
-                    self.movesteering.off()
-                    self.fork.off()
 
-                    
-    def stop(self, movesteering):
-        self.movesteering.off()
+try:
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(websockets.serve(on_connect, '0.0.0.0', 9000))
+    print("READY")
+    loop.run_forever()
+except KeyboardInterrupt:
+    print("FAIL")
