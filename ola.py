@@ -45,7 +45,7 @@ class Panu:
             right_motor = SpeedPercent(30)
 
         rgb = self.color_sensor.rgb
-        while (not self.good_color(rgb) and not self.yellow_color(rgb):
+        while (not self.good_color(rgb) and not self.yellow_color(rgb)):
 
             self.drive.on_for_seconds(left_motor, right_motor, 0.1*turn_amount, block=False)
             
