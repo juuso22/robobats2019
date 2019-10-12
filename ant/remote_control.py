@@ -13,13 +13,7 @@ class RemoteControl():
     def start(self):
         print("remote control enabled")
 
-    async def run(self):
-        raw_cmd = ""
-        try:
-            raw_cmd = await asyncio.wait_for(self.socket.recv(), timeout = 0.1)
-        except TimeoutError:
-            pass
-
+    def run(self, raw_cmd):
         if raw_cmd != "":
             command = json.loads(raw_cmd)
             command_type = command['type']
