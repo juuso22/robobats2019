@@ -9,7 +9,7 @@ import Motors from './Motors.jsx';
 import styles from './styles/App.module.css';
 import { Stream } from 'stream';
 
-const ROBOT_IP_ADDR = '192.168.2.2';
+const ROBOT_IP_ADDR = '172.20.10.4';
 const ROBOT_PORT = 9000;
 
 const robotUri = `ws://${ROBOT_IP_ADDR}:${ROBOT_PORT}`;

@@ -2,9 +2,9 @@ import asyncio
 import websockets
 import json
 from asyncio import TimeoutError
-#from ev3dev2.motor import MoveJoystick, MoveDifferential, MoveSteering, MoveTank, OUTPUT_A, OUTPUT_B, SpeedPercent
-#from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3
-#from ev3dev2.sensor.lego import ColorSensor, TouchSensor, InfraredSensor
+from ev3dev2.motor import MoveJoystick, MoveDifferential, MoveSteering, MoveTank, OUTPUT_A, OUTPUT_B, SpeedPercent
+from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3
+from ev3dev2.sensor.lego import ColorSensor, TouchSensor, InfraredSensor
 from websockets.exceptions import ConnectionClosed
 from remote_control import RemoteControl
 
