@@ -25,7 +25,7 @@ def drive_until_proximity(proximity, direction):
 
 
 #steering_drive.on_for_seconds(0, SpeedPercent(-100), 2)
-def wait_and_drive(direction, proximity, i): 
+def wait_and_drive(direction, proximity, holes = 0, sleep_time = 0.3): 
     last_proximity = 0
     while True:
         curr_prox = infrared_sensor.proximity
@@ -47,13 +47,13 @@ def wait_and_drive(direction, proximity, i):
         else:
             break
 
-    time.sleep(0.5)
+    time.sleep(sleep_time)
     print('CHARGE')
     drive_until_proximity(50, 15 * RIGHT)
 # code.interact(local = locals())
 
 drive_until_proximity(40, 0)
-wait_and_drive(15 * RIGHT, 75, 1)
+wait_and_drive(15 * RIGHT, 75, holes = 1, sleep_time = 0.5)
 drive_until_proximity(40, 0)
 wait_and_drive(15 * RIGHT, 75, 2)
 
