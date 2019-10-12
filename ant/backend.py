@@ -13,18 +13,30 @@ async def on_connect(socket, path):
 
     try:
         movesteering = MoveSteering(OUTPUT_A, OUTPUT_B)
-        remote_control = RemoteControl(movesteering)
+        remote_control = RemoteControl(socket, movesteering)
 
         mode = remote_control
-
         while True:
+            raw_cmd = ""
             try:
-                raw_cmd = await asyncio.wait_for(socket.recv(), timeout = 0.1)
+                raw_cmd = await asyncio.wait_for(socket.recv(), timeout = 0.05)
+            except TimeoutError:
+                pass
+
+            if raw_cmd == "":
+                await mode.run()
+            else:
+                print("CHANGING MODE")
+                print(raw_cmd)
+
                 command = json.loads(raw_cmd)
                 command_type = command['type']
                 if command_type == 'MODE': 
                     old_number = mode_number
                     mode_number = command['mode']
+
+                    print(mode_number)
+                    print(old_number)
 
                     if mode_number != old_number:
                         mode.stop()
@@ -41,11 +53,7 @@ async def on_connect(socket, path):
                         elif mode_number == 6:
                             mode = remote_control
                             mode.start()
-                    else:
-                        mode.run()
                 
-            except TimeoutError:
-                pass
     except ConnectionClosed:
         pass
 
@@ -55,4 +63,4 @@ try:
     print("READY")
     loop.run_forever()
 except KeyboardInterrupt:
-    print()
+    print("FAIL")
