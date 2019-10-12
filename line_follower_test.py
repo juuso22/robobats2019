@@ -111,11 +111,12 @@ class LineFollowerTest:
             self.move_while_on_track(0, LineFollowerTest.FORWARD_SPEED * direction)
 
             # Go back after seeing yellow (track-specific)
+            print("Currently seeing: " + self.color_sensor.color_name)
             if self.color_sensor.color == 4: #Yellow
                 self.steering_drive.on_for_seconds(0, SpeedPercent(LineFollowerTest.FORWARD_SPEED), LineFollowerTest.TIME_STEP * 8, False)
                 self.steering_drive.on_for_degrees(-100, SpeedPercent(-LineFollowerTest.SEARCH_SPEED), 90, False)
 
-            if self.color_sensor.color == 5:
+            if self.color_sensor.color == 2:
                 break
 
             found = False
