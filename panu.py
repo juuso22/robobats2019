@@ -21,7 +21,7 @@ atexit.register(goodbye)
 last_backtrack_direction = "left"
 
 def good_color(rgb):
-    return rgb[0] + rgb[1] + rgb[2] > 300
+    return rgb[0] + rgb[1] + rgb[2] > 200
 
 def yellow_color(rgb):
     return rgb[2] < 50 and rgb[2] < rgb[0] / 1.5 and rgb[2] < rgb[1] / 1.5 and rgb[0] > 75
@@ -37,11 +37,11 @@ def backtrack(direction):
     last_backtrack_direction = direction
 
     if (direction == "left"):
-        left_motor = SpeedPercent(100)
-        right_motor = SpeedPercent(-70)
+        left_motor = SpeedPercent(50)
+        right_motor = SpeedPercent(-35)
     elif (direction == "right"):
-        left_motor = SpeedPercent(-70)
-        right_motor = SpeedPercent(100)
+        left_motor = SpeedPercent(-35)
+        right_motor = SpeedPercent(50)
 
     rgb = color_sensor.rgb
     while (good_color(rgb) == False and yellow_color(rgb) == False):
