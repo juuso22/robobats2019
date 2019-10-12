@@ -39,7 +39,7 @@ class LineFollowerTest:
         global last_search_direction
         last_brightness = 1000
         brightness = last_brightness
-        self.steering_drive.on_for_seconds(0, SpeedPercent(speed), LineFollowerTest.TIME_STEP * LineFollowerTest.STEPS_PER_SECOND * 10, False, False)
+        self.steering_drive.on_for_seconds(0, SpeedPercent(-speed), LineFollowerTest.TIME_STEP * LineFollowerTest.STEPS_PER_SECOND * 10, False, False)
         while self.on_track():
             print(last_brightness)
             effective_direction = direction
@@ -114,9 +114,9 @@ class LineFollowerTest:
             self.move_while_on_track(0, LineFollowerTest.FORWARD_SPEED * direction)
 
             # Go back after seeing yellow (track-specific)
-            if self.color_sensor.color == COLOR_YELLOW:
-                self.steering_drive.on_for_seconds(0, SpeedPercent(-LineFollowerTest.FORWARD_SPEED), LineFollowerTest.TIME_STEP * 8, False)
-                self.steering_drive.on_for_degrees(-100, SpeedPercent(LineFollowerTest.SEARCH_SPEED), 90, False)
+            if self.color_sensor.color == 4: #Yellow
+                self.steering_drive.on_for_seconds(0, SpeedPercent(LineFollowerTest.FORWARD_SPEED), LineFollowerTest.TIME_STEP * 8, False)
+                self.steering_drive.on_for_degrees(-100, SpeedPercent(-LineFollowerTest.SEARCH_SPEED), 90, False)
 
             if self.color_sensor.color == 5:
                 break
