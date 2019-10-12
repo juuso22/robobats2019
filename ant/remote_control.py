@@ -34,9 +34,9 @@ class RemoteControl():
                 elif move == 's':
                     self.movesteering.on(0, -100)
                 elif move == 'a':
-                    self.movesteering.on(100, -100)
+                    self.movesteering.on(100, 100)
                 elif move == 'd':
-                    self.movesteering.on(-100, -100)
+                    self.movesteering.on(-100, 100)
                 elif move == 'stop':
                     self.movesteering.off()
 
