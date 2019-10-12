@@ -85,7 +85,7 @@ class Panu:
         self.drive.on_for_seconds(100, 0, 1.5)
         self.drive.on_for_seconds(100, 100, 0.5)
 
-    def find_line(self):
+    def find_line(self, turn_amount = 1):
         rgb = self.color_sensor.rgb
         left_motor = SpeedPercent(50)
         right_motor = SpeedPercent(25)
@@ -93,7 +93,7 @@ class Panu:
             timer_countdown = 0
 
             self.drive.on_for_seconds(left_motor, right_motor, 1, block=False)
-            while ((not self.good_color(rgb) and not self.yellow_color(rgb)) and timer_countdown < 0.1*turn_amount):
+            while ((not self.good_color(rgb) and not self.yellow_color(rgb)) and timer_countdown < 0.1*self.turn_amount):
                 timer_countdown += 0.01
                 sleep(0.01)
                 rgb = self.color_sensor.rgb
