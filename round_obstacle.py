@@ -25,8 +25,9 @@ def drive_until_proximity(proximity, direction):
 
 
 #steering_drive.on_for_seconds(0, SpeedPercent(-100), 2)
-def wait_and_drive(direction, proximity, holes = 0, sleep_time = 0.3): 
+def wait_and_drive(direction, proximity, maxholes = 0, sleep_time = 0.3): 
     last_proximity = 0
+    i = 0
     while True:
         curr_prox = infrared_sensor.proximity
         if (curr_prox < proximity):
@@ -39,7 +40,7 @@ def wait_and_drive(direction, proximity, holes = 0, sleep_time = 0.3):
             time.sleep(0.1)
             print('Infrared sensor is ' + str(curr_prox))
             continue
-        elif(i == 0):
+        elif(i < maxholes):
             last_proximity = curr_prox
             i += 1
             print('Found first aukko')
@@ -49,13 +50,13 @@ def wait_and_drive(direction, proximity, holes = 0, sleep_time = 0.3):
 
     time.sleep(sleep_time)
     print('CHARGE')
-    drive_until_proximity(50, 15 * RIGHT)
+    drive_until_proximity(40, 15 * RIGHT)
 # code.interact(local = locals())
 
 drive_until_proximity(40, 0)
-wait_and_drive(15 * RIGHT, 75, holes = 1, sleep_time = 0.5)
+wait_and_drive(15 * RIGHT, 75, maxholes = 1, sleep_time = 0.5)
 drive_until_proximity(40, 0)
-wait_and_drive(15 * RIGHT, 75, 2)
+wait_and_drive(15 * RIGHT, 75, maxholes = 2, )
 
 
 
