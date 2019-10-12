@@ -4,8 +4,6 @@ from ev3dev2.sensor import INPUT_1
 from ev3dev2.sensor.lego import ColorSensor
 from ev3dev2.led import Leds
 from ev3dev2.sound import Sound
-import asyncio
-import websockets
 import time
 
 class LineFollowerTest:
@@ -27,7 +25,7 @@ class LineFollowerTest:
         self.steering_drive = movesteering
         self.color_sensor = colorsensor
 
-    def on_track():
+    def on_track(self):
         global last_brightness
         red = self.color_sensor.red
         green = self.color_sensor.green
@@ -38,7 +36,7 @@ class LineFollowerTest:
         color = self.color_sensor.color
         return color == 6
 
-    def move_while_on_track(direction, speed):
+    def move_while_on_track(self, direction, speed):
         global last_brightness
         global last_search_direction
         last_brightness = 1000
@@ -56,7 +54,7 @@ class LineFollowerTest:
 
         self.steering_drive.off(None, False)
 
-    def move_until_on_track(direction, speed, max_steps):
+    def move_until_on_track(self, direction, speed, max_steps):
         i = 0
         self.steering_drive.on_for_seconds(direction, SpeedPercent(-speed), TIME_STEP * max_steps, False, False)
         while (self.steering_drive.is_running or self.steering_drive.is_ramping) and not on_track() and self.color_sensor.color != 6:
@@ -72,13 +70,13 @@ class LineFollowerTest:
         else:
             return i
 
-    def direction_name(turn_direction):
+    def direction_name(self, turn_direction):
         if turn_direction < 0:
             return 'left'
         else:
             return 'right'
 
-    def turn_and_seek(max_turn_steps, turn_direction):
+    def turn_and_seek(self, max_turn_steps, turn_direction):
         name = direction_name(turn_direction)
         print('Turn ' + name)
         result = move_until_on_track(100 * turn_direction, SEARCH_SPEED, max_turn_steps)
@@ -88,7 +86,7 @@ class LineFollowerTest:
         self.steering_drive.on_for_seconds(100 * turn_direction * -1, SpeedPercent(-SEARCH_SPEED), TIME_STEP * result, False)
         return False
 
-    def find_line(max_turn_steps):
+    def find_line(self, max_turn_steps):
         global last_search_direction
         if turn_and_seek(max_turn_steps, last_search_direction):
             return True
@@ -99,14 +97,14 @@ class LineFollowerTest:
 
         return False
 
-    def start():
+    def start(self):
         print("Falling on line")
 
-    def stop():
+    def stop(self):
         self.steering_drive.off()
         self.color_sensor.off()
 
-    def run():
+    def run(self):
         direction = 1
         max_turn_steps = SEARCH_MAX_STEPS
 
