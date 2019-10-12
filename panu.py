@@ -20,13 +20,11 @@ atexit.register(goodbye)
 
 last_backtrack_direction = "left"
 
-def good_color():
-    rgb = color_sensor.rgb
+def good_color(rgb):
     return rgb[0] + rgb[1] + rgb[2] > 300
 
-def yellow_color():
-    rgb = color_sensor.rgb
-    return rgb[2] < 50 and rgb[2] < rgb[0] / 2 and rgb[2] < rgb[1] / 2 and rgb[0] > 75
+def yellow_color(rgb):
+    return rgb[2] < 50 and rgb[2] < rgb[0] / 1.5 and rgb[2] < rgb[1] / 1.5 and rgb[0] > 75
 
 def green_color():
     color = color_sensor.color
@@ -66,10 +64,10 @@ def backtrack(direction):
 
         turn_amount *= 2
 
-        if (last_backtrack_direction == "left"):
-            last_backtrack_direction = "right"
-        else:
-            last_backtrack_direction = "left"
+        # if (last_backtrack_direction == "left"):
+        #     last_backtrack_direction = "right"
+        # else:
+        #     last_backtrack_direction = "left"
 
 
 def find_track():
@@ -77,15 +75,17 @@ def find_track():
 
 def force_back_and_turn_left():
     drive.on_for_seconds(-100, -100, 1.5)
-    drive.on_for_seconds(0, 100, 0.5)
+    drive.on_for_seconds(100, 0, 1.5)
     drive.on_for_seconds(100, 100, 0.5)
 
 def main():
     color_sensor.calibrate_white()
+    rgb = color_sensor.rgb
     while True:
-        while(good_color() == True):
-            drive.on(SpeedPercent(100), SpeedPercent(100))
-            if (yellow_color() == True):
+        while(good_color(rgb) == True):
+            drive.on(SpeedPercent(80), SpeedPercent(80))
+            rgb = color_sensor.rgb
+            if (yellow_color(rgb) == True):
                 print(str(color_sensor.rgb))
                 drive.stop(brake=True)
                 force_back_and_turn_left()
