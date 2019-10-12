@@ -15,7 +15,7 @@ async def on_connect(socket, path):
 
     try:
         movesteering = MoveSteering(OUTPUT_A, OUTPUT_B)
-        colorsensor = MoveSteering(INPUT_1)
+        colorsensor = ColorSensor(INPUT_1)
         fork = MediumMotor(OUTPUT_C)
         remote_control = RemoteControl(socket, movesteering, fork)
         fixed_mode = FixedMode(socket, movesteering)

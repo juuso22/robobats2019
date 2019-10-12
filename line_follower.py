@@ -16,7 +16,7 @@ class LineFollower:
     RIGHT = 1
     VEERING_THRESHOLD = 10000  # Veering off
 
-    def __init__(self, movesteering, colorsensor):
+    def __init__(self, movesteering = MoveSteering(OUTPUT_A, OUTPUT_B), colorsensor):
         self.steering_drive = movesteering
         self.color_sensor = colorsensor
         self.last_search_direction = 1

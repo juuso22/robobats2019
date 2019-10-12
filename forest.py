@@ -7,18 +7,21 @@ import time
 import code
 
 class Forest:
-    def woop(self, TIME_MULTIPLIER = 1, DIRECTION_MULTIPLIEER = 1):
-        steering_drive = MoveSteering(OUTPUT_A, OUTPUT_B)
-        steering_drive.on_for_seconds(-0 * DIRECTION_MULTIPLIEER,  100,  3 * TIME_MULTIPLIER)
-        steering_drive.on_for_seconds(-35 * DIRECTION_MULTIPLIEER, 100,  4.1 * TIME_MULTIPLIER)
-        steering_drive.on_for_seconds(0 * DIRECTION_MULTIPLIEER,  100,  1.8 * TIME_MULTIPLIER)
-        steering_drive.on_for_seconds(40 * DIRECTION_MULTIPLIEER,  1100,  1.3 * TIME_MULTIPLIER)
-        steering_drive.on_for_seconds(0 * DIRECTION_MULTIPLIEER,  1100,  0.8 * TIME_MULTIPLIER)
-        steering_drive.on_for_seconds(-40 * DIRECTION_MULTIPLIEER,  1100,  1 * TIME_MULTIPLIER)
+    def __init__(self, ms = MoveSteering(OUTPUT_A, OUTPUT_B), cs = ColorSensor(INPUT_1)):
+        self.steering_drive = ms
+        self.color_sensor = cs
+
+    def start(self, TIME_MULTIPLIER = 1, DIRECTION_MULTIPLIER = 1):
+        self.steering_drive.on_for_seconds(-0 * DIRECTION_MULTIPLIER,  100,  3 * TIME_MULTIPLIER)
+        self.steering_drive.on_for_seconds(-35 * DIRECTION_MULTIPLIER, 100,  4.1 * TIME_MULTIPLIER)
+        self.steering_drive.on_for_seconds(0 * DIRECTION_MULTIPLIER,  100,  1.8 * TIME_MULTIPLIER)
+        self.steering_drive.on_for_seconds(40 * DIRECTION_MULTIPLIER,  100,  1.3 * TIME_MULTIPLIER)
+        self.steering_drive.on_for_seconds(0 * DIRECTION_MULTIPLIER,  100,  0.8 * TIME_MULTIPLIER)
+        self.steering_drive.on_for_seconds(-40 * DIRECTION_MULTIPLIER,  100,  1 * TIME_MULTIPLIER)
 
 def main():
     forest = Forest()
-    forest.woop()
+    forest.start()
 
 if __name__ == "__main__":
     main()
