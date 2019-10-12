@@ -46,19 +46,19 @@ def backtrack(direction):
         left_motor = SpeedPercent(-30)
         right_motor = SpeedPercent(30)
 
-    while (good_luminance() == False):
+    while (not good_luminance()):
 
         drive.on_for_seconds(left_motor, right_motor, 0.1*turn_amount, block=False)
         
         timer_countdown = 0
 
-        while (good_luminance() == False and timer_countdown < 0.1*turn_amount):
+        while (not good_luminance() and timer_countdown < 0.1*turn_amount):
             timer_countdown += 0.01
             sleep(0.01)
             # do nothing
         drive.stop()
 
-        if (good_luminance() == True):
+        if (not good_luminance()):
             #intended overshoot to get to the center of the tape
             #should be modified to rely on the intensity of light with a max value similar to the one in this if clause
             drive.on_for_seconds(left_motor, right_motor, 0.1)
@@ -81,7 +81,10 @@ def force_back_and_turn_left():
     sleep(5.0)
     drive.on_for_seconds(-100, -100, 1)
     drive.on_for_seconds(100, -100, 1.0)
-    drive.on_for_seconds(100, 100, 0.5)
+    while (not good_luminance()):
+        drive.on(80, 80)
+    drive.stop(brake=True)
+    last_backtrack_direction = 'left'
 
 def find_line():
     drive.on_for_seconds(100,100,2)
