@@ -44,13 +44,13 @@ def backtrack(direction):
         right_motor = SpeedPercent(100)
 
     rgb = color_sensor.rgb
-    while (good_color(rgb) == False or yellow_color(rgb) == False):
+    while (good_color(rgb) == False and yellow_color(rgb) == False):
 
         drive.on_for_seconds(left_motor, right_motor, 0.1*turn_amount, block=False)
         
         timer_countdown = 0
 
-        while (good_color(rgb) == False and yellow_color(rgb) == False and timer_countdown < 0.1*turn_amount):
+        while ((good_color(rgb) == False and yellow_color(rgb) == False) and timer_countdown < 0.1*turn_amount):
             timer_countdown += 0.01
             sleep(0.01)
             # do nothing
