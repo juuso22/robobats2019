@@ -17,21 +17,21 @@ class Panu:
         self.drive.stop()
         
 
-    atexit.register(self.goodbye)
+    atexit.register(goodbye)
 
     last_backtrack_direction = "left"
 
-    def good_color(rgb):
+    def good_color(self, rgb):
         return rgb[0] + rgb[1] + rgb[2] > 200
 
-    def yellow_color(rgb):
+    def yellow_color(self, rgb):
         return rgb[2] < 50 and rgb[2] < rgb[0] / 1.5 and rgb[2] < rgb[1] / 1.5 and rgb[0] > 75
 
-    def green_color():
+    def green_color(self, ):
         color = self.color_sensor.color
         return color == ColorSensor.COLOR_GREEN
 
-    def backtrack(direction):
+    def backtrack(self, direction):
 
         turn_amount = 1
 
@@ -75,17 +75,17 @@ class Panu:
             #     last_backtrack_direction = "left"
 
 
-    def find_track():
+    def find_track(self):
         self.backtrack(self.last_backtrack_direction)
 
-    def force_back_and_turn_left():
+    def force_back_and_turn_left(self):
         self.drive.on_for_seconds(100,100,1.0)
         sleep(5.0)
         self.drive.on_for_seconds(-100, -100, 2.5)
         self.drive.on_for_seconds(100, 0, 1.5)
         self.drive.on_for_seconds(100, 100, 0.5)
 
-    def find_line():
+    def find_line(self):
         rgb = self.color_sensor.rgb
         left_motor = SpeedPercent(50)
         right_motor = SpeedPercent(25)
@@ -105,7 +105,7 @@ class Panu:
         self.drive.stop(brake=True)
 
 
-    def main():
+    def main(self):
         self.find_line()
 
         self.color_sensor.calibrate_white()
