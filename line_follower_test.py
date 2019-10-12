@@ -99,10 +99,10 @@ class LineFollowerTest:
 
         return False
 
-    def start()
+    def start():
         print("Falling on line")
 
-    def stop()
+    def stop():
         self.steering_drive.off()
         self.color_sensor.off()
 
@@ -148,5 +148,5 @@ def main():
     follower = LineFollowerTest(movesteering, colorsensor)
     follower.run()
 
-if __name__ = "__main__"
+if __name__ == "__main__":
     main()
