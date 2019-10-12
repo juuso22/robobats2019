@@ -21,8 +21,8 @@ class Forest:
         self.steering_drive.on_for_rotations(0, 100, 5)
         self.steering_drive.on_for_rotations(100, 100, 1.5)
         self.steering_drive.on_for_rotations(0, 100, 5)
-        self.steering_drive.on_for_rotations(-100, 100, 1.5)
-        self.steering_drive.on_for_rotations(0, 100, 3)
+        self.steering_drive.on_for_rotations(-100, 100, 1.8)
+        self.steering_drive.on_for_rotations(0, 100, 3.1)
         self.steering_drive.on_for_rotations(100, 100, 0.7)
         self.steering_drive.on_for_rotations(0, 100, 3.3)
 
