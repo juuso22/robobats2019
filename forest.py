@@ -12,12 +12,19 @@ class Forest:
         self.color_sensor = cs
 
     def start(self, TIME_MULTIPLIER = 1, DIRECTION_MULTIPLIER = 1):
-        self.steering_drive.on_for_seconds(-0 * DIRECTION_MULTIPLIER,  100,  3 * TIME_MULTIPLIER)
-        self.steering_drive.on_for_seconds(-35 * DIRECTION_MULTIPLIER, 100,  4.1 * TIME_MULTIPLIER)
-        self.steering_drive.on_for_seconds(0 * DIRECTION_MULTIPLIER,  100,  1.8 * TIME_MULTIPLIER)
-        self.steering_drive.on_for_seconds(40 * DIRECTION_MULTIPLIER,  100,  1.3 * TIME_MULTIPLIER)
-        self.steering_drive.on_for_seconds(0 * DIRECTION_MULTIPLIER,  100,  0.8 * TIME_MULTIPLIER)
-        self.steering_drive.on_for_seconds(-40 * DIRECTION_MULTIPLIER,  100,  1 * TIME_MULTIPLIER)
+        self.steering_drive.on_for_rotations(0, 100, 2)
+        self.steering_drive.on_for_rotations(100, 100, 1.2)
+        self.steering_drive.on_for_rotations(0, 100, 5)
+        self.steering_drive.on_for_rotations(-100, 100, 1)
+        self.steering_drive.on_for_rotations(0, 100, 2.4)
+        self.steering_drive.on_for_rotations(-100, 100, 1.4)
+        self.steering_drive.on_for_rotations(0, 100, 5)
+        self.steering_drive.on_for_rotations(100, 100, 1.5)
+        self.steering_drive.on_for_rotations(0, 100, 5)
+        self.steering_drive.on_for_rotations(-100, 100, 1.5)
+        self.steering_drive.on_for_rotations(0, 100, 3)
+        self.steering_drive.on_for_rotations(100, 100, 0.7)
+        self.steering_drive.on_for_rotations(0, 100, 3.3)
 
 def main():
     forest = Forest()
