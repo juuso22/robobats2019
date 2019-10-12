@@ -116,7 +116,7 @@ class LineFollower:
 
             # Go back after seeing yellow (track-specific)
             print("Currently seeing: " + self.color_sensor.color_name)
-            print("Aka in rpg: " ) + str(self.color_sensor.rgb)
+            print("Aka in rpg: "  + str(self.color_sensor.rgb))
             if yellow_count > 5:
                 print("Too much yellow :( Maybe I got stuck. Will stop line following.")
                 break
