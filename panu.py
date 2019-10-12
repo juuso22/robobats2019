@@ -12,12 +12,11 @@ sound = Sound()
 color_sensor = ColorSensor(address=INPUT_1)
 drive = MoveTank(OUTPUT_A, OUTPUT_B)
 
-
-atexit.register(goodbye)
-
 def goodbye():
     drive.stop()
     
+
+atexit.register(goodbye)
 
 last_backtrack_direction = "left"
 
@@ -26,8 +25,8 @@ def good_color():
     return color == ColorSensor.COLOR_WHITE or color == ColorSensor.COLOR_BLUE or color == ColorSensor.COLOR_RED
 
 def yellow_color():
-    color = color_sensor.color
-    return color == ColorSensor.COLOR_YELLOW
+    rgb = color_sensor.rgb
+    return rgb[2] < 50 and rgb[2] < rgb[0] / 2 and rgb[2] < rgb[1] / 2 and rgb[0] > 75
 
 def green_color():
     color = color_sensor.color
@@ -82,11 +81,12 @@ def force_back_and_turn_left():
     drive.on_for_seconds(100, 100, 0.5)
 
 def main():
-    colorsensor.calibrate_white()
+    color_sensor.calibrate_white()
     while True:
         while(good_color() == True):
             drive.on(SpeedPercent(100), SpeedPercent(100))
             if (yellow_color() == True):
+                print(str(color_sensor.rgb))
                 drive.stop(brake=True)
                 force_back_and_turn_left()
         drive.stop(brake=True)
