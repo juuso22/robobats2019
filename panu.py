@@ -79,6 +79,7 @@ def find_track():
 def force_back_and_turn_left():
     drive.on_for_seconds(-100, -100, 1.5)
     drive.on_for_seconds(0, 100, 0.5)
+    drive.on_for_seconds(100, 100, 0.5)
 
 def main():
     colorsensor.calibrate_white()
