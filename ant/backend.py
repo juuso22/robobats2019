@@ -8,6 +8,7 @@ from ev3dev2.sensor.lego import ColorSensor, TouchSensor, InfraredSensor
 from websockets.exceptions import ConnectionClosed
 from remote_control import RemoteControl
 from fixed_mode import FixedMode
+from round_obstacle import RoundObstacle
 
 async def on_connect(socket, path):
 
@@ -54,6 +55,7 @@ async def on_connect(socket, path):
                 #             print("5")
                 #         elif mode_number == 6:
                 #             mode = remote_control
+                                # start repl
                 #             mode.start()
                 
     except ConnectionClosed:
