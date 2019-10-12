@@ -68,7 +68,7 @@ def backtrack(direction):
 def find_track():
     backtrack(last_backtrack_direction)
 
-def force_turn_left():
+def force_back_and_turn_left():
     drive.on_for_seconds(-100, -100, 1.5)
     drive.on_for_seconds(0, 100, 0.5)
 
@@ -78,7 +78,7 @@ while True:
         drive.on(SpeedPercent(100), SpeedPercent(100))
         if (yellow_color() == True):
             drive.stop(brake=True)
-            force_turn_left()
+            force_back_and_turn_left()
     drive.stop(brake=True)
     if (green_color() == True):
         drive.stop(brake=True)
