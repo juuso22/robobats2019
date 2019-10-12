@@ -77,10 +77,10 @@ def find_track():
     backtrack(last_backtrack_direction)
 
 def force_back_and_turn_left():
-    drive.on_for_seconds(100,100,1.0)
+    drive.on_for_seconds(100,100,0.5)
     sleep(5.0)
-    drive.on_for_seconds(-100, -100, 2.5)
-    drive.on_for_seconds(100, 0, 1.5)
+    drive.on_for_seconds(-100, -100, 2)
+    drive.on_for_seconds(100, -100, 0.75)
     drive.on_for_seconds(100, 100, 0.5)
 
 def find_line():
