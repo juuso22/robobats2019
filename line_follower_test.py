@@ -40,7 +40,7 @@ class LineFollowerTest:
         last_brightness = 1000
         brightness = last_brightness
         self.steering_drive.on_for_seconds(0, SpeedPercent(speed), LineFollowerTest.TIME_STEP * LineFollowerTest.STEPS_PER_SECOND * 10, False, False)
-        while on_track():
+        while self.on_track():
             print(last_brightness)
             effective_direction = direction
             if last_brightness < brightness - LineFollowerTest.VEERING_THRESHOLD:
@@ -54,7 +54,7 @@ class LineFollowerTest:
     def move_until_on_track(self, direction, speed, max_steps):
         i = 0
         self.steering_drive.on_for_seconds(direction, SpeedPercent(-speed), LineFollowerTest.TIME_STEP * max_steps, False, False)
-        while (self.steering_drive.is_running or self.steering_drive.is_ramping) and not on_track() and self.color_sensor.color != 6:
+        while (self.steering_drive.is_running or self.steering_drive.is_ramping) and not self.on_track() and self.color_sensor.color != 6:
             #self.steering_drive.on_for_seconds(direction, SpeedPercent(-speed), LineFollowerTest.TIME_STEP, False)
             i = i + 1
             #if i >= max_steps:
@@ -62,7 +62,7 @@ class LineFollowerTest:
 
         self.steering_drive.off(None, False)
         #if i < max_steps:
-        if on_track():
+        if self.on_track():
             return -1
         else:
             return i
@@ -74,9 +74,9 @@ class LineFollowerTest:
             return 'right'
 
     def turn_and_seek(self, max_turn_steps, turn_direction):
-        name = direction_name(turn_direction)
+        name = self.direction_name(turn_direction)
         print('Turn ' + name)
-        result = move_until_on_track(100 * turn_direction, LineFollowerTest.SEARCH_SPEED, max_turn_steps)
+        result = self.move_until_on_track(100 * turn_direction, LineFollowerTest.SEARCH_SPEED, max_turn_steps)
         if result == -1:
             return True
         print('Turn back')
@@ -85,10 +85,10 @@ class LineFollowerTest:
 
     def find_line(self, max_turn_steps):
         global last_search_direction
-        if turn_and_seek(max_turn_steps, last_search_direction):
+        if self.turn_and_seek(max_turn_steps, last_search_direction):
             return True
 
-        if turn_and_seek(max_turn_steps, -last_search_direction):
+        if self.turn_and_seek(max_turn_steps, -last_search_direction):
             last_search_direction = -last_search_direction
             return True
 
@@ -111,7 +111,7 @@ class LineFollowerTest:
             else:
                 print('Backward')
 
-            move_while_on_track(0, LineFollowerTest.FORWARD_SPEED * direction)
+            self.move_while_on_track(0, LineFollowerTest.FORWARD_SPEED * direction)
 
             # Go back after seeing yellow (track-specific)
             if self.color_sensor.color == COLOR_YELLOW:
@@ -125,14 +125,14 @@ class LineFollowerTest:
             i = 0
             max_turn_steps = LineFollowerTest.SEARCH_MAX_STEPS
             while i < 5:
-                if find_line(max_turn_steps):
+                if self.find_line(max_turn_steps):
                     found = True
                     break
                 i = i + 1
                 max_turn_steps = max_turn_steps * 2
 
             if found:
-                check_for_mode_change()
+                self.check_for_mode_change()
                 continue
 
             print('Lost it')
