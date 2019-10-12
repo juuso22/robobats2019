@@ -200,6 +200,21 @@ const onKeyDown = ({ key }) => {
       sendCommand(command);
       break;
     }
+    case '1':
+    case '2':
+    case '3':
+    case '4':
+    case '5':
+    case '6': {
+      if (pressedKeys.includes(key)) return;
+      pressedKeys.push(key);
+      const command = {
+        type: 'MODE',
+        mode: key,
+      };
+      sendCommand(command);
+      break;
+    }
     default:
   }
 };
