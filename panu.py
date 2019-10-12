@@ -92,7 +92,7 @@ def find_line():
         timer_countdown = 0
 
         drive.on_for_seconds(left_motor, right_motor, 1, block=False)
-        while(good_luminanc()) == False and timer_countdown < 0.1*turn_amount):
+        while(good_luminance() == False and timer_countdown < 0.1*turn_amount):
             timer_countdown += 0.01
             sleep(0.01)
             # do nothing
