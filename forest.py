@@ -20,7 +20,7 @@ class Forest:
 
 def main():
     forest = Forest()
-    forest.woop
+    forest.woop()
 
 if __name__ == "__main__":
     main()
