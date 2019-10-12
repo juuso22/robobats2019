@@ -5,11 +5,19 @@ from ev3dev2.sensor.lego import ColorSensor
 from ev3dev2.sound import Sound
 from time import sleep
 
+import atexit
+
 sound = Sound()
-sound.speak('Move aside MEATBAGS!')
 
 color_sensor = ColorSensor(address=INPUT_1)
 drive = MoveTank(OUTPUT_A, OUTPUT_B)
+
+
+atexit.register(goodbye)
+
+def goodbye():
+    drive.stop()
+    
 
 last_backtrack_direction = "left"
 
@@ -72,16 +80,19 @@ def force_back_and_turn_left():
     drive.on_for_seconds(-100, -100, 1.5)
     drive.on_for_seconds(0, 100, 0.5)
 
-
-while True:
-    while(good_color() == True):
-        drive.on(SpeedPercent(100), SpeedPercent(100))
-        if (yellow_color() == True):
-            drive.stop(brake=True)
-            force_back_and_turn_left()
-    drive.stop(brake=True)
-    if (green_color() == True):
+def main():
+    colorsensor.calibrate_white()
+    while True:
+        while(good_color() == True):
+            drive.on(SpeedPercent(100), SpeedPercent(100))
+            if (yellow_color() == True):
+                drive.stop(brake=True)
+                force_back_and_turn_left()
         drive.stop(brake=True)
-        sound.speak("I win, MEATBAGS!")
-    find_track()
+        if (green_color() == True):
+            drive.stop(brake=True)
+            sound.speak("Move aside, MEATBAGS!")
+        find_track()
 
+if __name__ == "__main__":
+    main()
