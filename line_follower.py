@@ -116,6 +116,7 @@ class LineFollower:
 
             # Go back after seeing yellow (track-specific)
             print("Currently seeing: " + self.color_sensor.color_name)
+            print("Aka in rpg: " ) + str(self.color_sensor.rgb)
             if yellow_count > 5:
                 print("Too much yellow :( Maybe I got stuck. Will stop line following.")
                 break
@@ -124,7 +125,7 @@ class LineFollower:
                 self.steering_drive.on_for_seconds(0, SpeedPercent(LineFollower.FORWARD_SPEED * 2), LineFollower.TIME_STEP * 12, False)
                 self.steering_drive.on_for_degrees(25, -25, 90, False)
 
-            if self.color_sensor.rgb[0] < 160 and self.color_sensor.rgb[1] < 160 and self.color_sensor.rgb[2] > 240:
+            if self.color_sensor.rgb[0] in range(130, 171) and self.color_sensor.rgb[1] in range(130, 171) and self.color_sensor.rgb[2] > 230:
                 print("Victory!")
                 break
 
