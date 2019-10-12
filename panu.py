@@ -21,8 +21,8 @@ atexit.register(goodbye)
 last_backtrack_direction = "left"
 
 def good_color():
-    color = color_sensor.color
-    return color == ColorSensor.COLOR_WHITE or color == ColorSensor.COLOR_BLUE or color == ColorSensor.COLOR_RED
+    rgb = color_sensor.rgb
+    return rgb[0] + rgb[1] + rgb[2] > 300
 
 def yellow_color():
     rgb = color_sensor.rgb
