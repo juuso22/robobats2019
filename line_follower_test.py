@@ -101,6 +101,7 @@ class LineFollowerTest:
     def run(self):
         direction = 1
         max_turn_steps = LineFollowerTest.SEARCH_MAX_STEPS
+        yellow_count = 0
 
         while True:
             if direction == 1:
@@ -112,8 +113,12 @@ class LineFollowerTest:
 
             # Go back after seeing yellow (track-specific)
             print("Currently seeing: " + self.color_sensor.color_name)
+            if yellow_count > 5:
+                print("Too much yellow :( Maybe I got stuck. Will stop line following.")
+                break
             if self.color_sensor.color == 4: #Yellow
-                self.steering_drive.on_for_seconds(0, SpeedPercent(LineFollowerTest.FORWARD_SPEED), LineFollowerTest.TIME_STEP * 8, False)
+                yellow_count = yellow_count + 1
+                self.steering_drive.on_for_seconds(0, SpeedPercent(LineFollowerTest.FORWARD_SPEED * 2), LineFollowerTest.TIME_STEP * 8, False)
                 self.steering_drive.on_for_degrees(-100, SpeedPercent(-LineFollowerTest.SEARCH_SPEED), 90, False)
 
             if self.color_sensor.color == 2:
