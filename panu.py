@@ -79,7 +79,7 @@ def find_track():
 def force_back_and_turn_left():
     drive.on_for_seconds(100,100,0.5)
     sleep(5.0)
-    drive.on_for_seconds(-100, -100, 1.25)
+    drive.on_for_seconds(-100, -100, 1)
     drive.on_for_seconds(100, -100, 1.0)
     drive.on_for_seconds(100, 100, 0.5)
 
