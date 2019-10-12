@@ -83,8 +83,9 @@ def force_back_and_turn_left():
 
 def main():
     color_sensor.calibrate_white()
-    rgb = color_sensor.rgb
+    
     while True:
+        rgb = color_sensor.rgb
         while(good_color(rgb) == True):
             drive.on(SpeedPercent(80), SpeedPercent(80))
             rgb = color_sensor.rgb
