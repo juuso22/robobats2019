@@ -136,6 +136,7 @@ class LineFollowerTest:
 def main():
     movesteering = MoveSteering(OUTPUT_A, OUTPUT_B)
     colorsensor = ColorSensor(address=INPUT_1)
+    colosensor.calibrate_white()
     follower = LineFollowerTest(movesteering, colorsensor)
     follower.run()
 
