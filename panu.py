@@ -53,6 +53,7 @@ def backtrack(direction):
         while ((good_color(rgb) == False and yellow_color(rgb) == False) and timer_countdown < 0.1*turn_amount):
             timer_countdown += 0.01
             sleep(0.01)
+            rgb = color_sensor.rgb
             # do nothing
         drive.stop()
 
@@ -81,7 +82,29 @@ def force_back_and_turn_left():
     drive.on_for_seconds(100, 0, 1.5)
     drive.on_for_seconds(100, 100, 0.5)
 
+def find_line():
+    rgb = color_sensor.rgb
+    left_motor = SpeedPercent(50)
+    right_motor = SpeedPercent(25)
+    while (good_color(rgb) == False):
+        timer_countdown = 0
+
+        drive.on_for_seconds(left_motor, right_motor, 1, block=False)
+        while ((good_color(rgb) == False and yellow_color(rgb) == False) and timer_countdown < 0.1*turn_amount):
+            timer_countdown += 0.01
+            sleep(0.01)
+            rgb = color_sensor.rgb
+            # do nothing
+
+        right_motor, left_motor = left_motor, right_motor
+        rgb = color_sensor.rgb
+
+    drive.stop(brake=True)
+
+
 def main():
+    find_line()
+
     color_sensor.calibrate_white()
     
     while True:
