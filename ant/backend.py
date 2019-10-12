@@ -2,7 +2,7 @@ import asyncio
 import websockets
 import json
 from asyncio import TimeoutError
-from ev3dev2.motor import MoveJoystick, MoveDifferential, MoveSteering, MoveTank, OUTPUT_A, OUTPUT_B, SpeedPercent
+from ev3dev2.motor import MoveJoystick, MoveDifferential, MoveSteering, MediumMotor, MoveTank, OUTPUT_A, OUTPUT_B, OUTPUT_C, SpeedPercent
 from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3
 from ev3dev2.sensor.lego import ColorSensor, TouchSensor, InfraredSensor
 from websockets.exceptions import ConnectionClosed
@@ -14,15 +14,20 @@ async def on_connect(socket, path):
 
     try:
         movesteering = MoveSteering(OUTPUT_A, OUTPUT_B)
-        remote_control = RemoteControl(socket, movesteering)
+        fork = MediumMotor(OUTPUT_C)
+        remote_control = RemoteControl(socket, movesteering, fork)
+        fixed_mode = FixedMode(socket, movesteering)
 
-        # mode = remote_control
-        mode = fixed_mode
+        mode = remote_control
+        #mode = fixed_mode
 #        while True:
-            raw_cmd = ""
+#            raw_cmd = ""
+
+        while True:
             try:
                 raw_cmd = await asyncio.wait_for(socket.recv(), timeout = 500)
-                await mode.run()
+                #await mode.run(raw_cmd)
+                mode.run(raw_cmd)
             except TimeoutError:
                 pass
 

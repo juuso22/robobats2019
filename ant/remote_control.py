@@ -6,9 +6,10 @@ from websockets.exceptions import ConnectionClosed
 
 class RemoteControl():
 
-    def __init__(self, socket, movesteering):
+    def __init__(self, socket, movesteering, fork):
         self.socket = socket
         self.movesteering = movesteering
+        self.fork = fork
 
     def start(self):
         print("remote control enabled")
@@ -31,8 +32,13 @@ class RemoteControl():
                     self.movesteering.on(100, 100)
                 elif move == 'd':
                     self.movesteering.on(-100, 100)
+                elif move == 't':
+                    self.fork.on(-100)
+                elif move == 'g':
+                    self.fork.on(100)
                 elif move == 'stop':
                     self.movesteering.off()
+                    self.fork.off()
 
                     
     def stop(self, movesteering):
