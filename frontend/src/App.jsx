@@ -187,7 +187,9 @@ const onKeyDown = ({ key }) => {
   switch (key) {
     case 'a':
     case 'd':
-    case 's':
+    case 'a':
+    case 't':
+    case 'g':
     case 'w': {
       if (pressedKeys.includes(key)) return;
       pressedKeys.push(key);
