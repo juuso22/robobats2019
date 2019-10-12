@@ -7,7 +7,7 @@ from ev3dev2.sensor import INPUT_1, INPUT_2, INPUT_3
 from ev3dev2.sensor.lego import ColorSensor, TouchSensor, InfraredSensor
 from websockets.exceptions import ConnectionClosed
 from remote_control import RemoteControl
-
+from fixed_mode import FixedMode
 
 async def on_connect(socket, path):
 
@@ -15,12 +15,13 @@ async def on_connect(socket, path):
         movesteering = MoveSteering(OUTPUT_A, OUTPUT_B)
         remote_control = RemoteControl(socket, movesteering)
 
-        mode = remote_control
-        while True:
+        # mode = remote_control
+        mode = fixed_mode
+#        while True:
             raw_cmd = ""
             try:
-                raw_cmd = await asyncio.wait_for(socket.recv(), timeout = 0.05)
-                mode.run(raw_cmd)
+                raw_cmd = await asyncio.wait_for(socket.recv(), timeout = 500)
+                await mode.run()
             except TimeoutError:
                 pass
 
