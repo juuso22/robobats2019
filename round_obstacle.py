@@ -50,13 +50,15 @@ def wait_and_drive(direction, proximity, maxholes = 0, sleep_time = 0.3):
 
     time.sleep(sleep_time)
     print('CHARGE')
-    drive_until_proximity(40, 15 * RIGHT)
+    drive_until_proximity(40, direction)
 # code.interact(local = locals())
 
 drive_until_proximity(40, 0)
 wait_and_drive(15 * RIGHT, 75, maxholes = 1, sleep_time = 0.5)
 drive_until_proximity(40, 0)
-wait_and_drive(15 * RIGHT, 75, maxholes = 2, )
+wait_and_drive(0, 75, maxholes = 1, sleep_time = 0.5)
+wait_and_drive(0, 75, maxholes = 1, sleep_time = 0.5)
+
 
 
 
