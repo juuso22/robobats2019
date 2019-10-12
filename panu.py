@@ -46,19 +46,19 @@ def backtrack(direction):
         left_motor = SpeedPercent(-35)
         right_motor = SpeedPercent(50)
 
-    while (good_luminance == False):
+    while (good_luminance() == False):
 
         drive.on_for_seconds(left_motor, right_motor, 0.1*turn_amount, block=False)
         
         timer_countdown = 0
 
-        while (good_luminance == False and timer_countdown < 0.1*turn_amount):
+        while (good_luminance() == False and timer_countdown < 0.1*turn_amount):
             timer_countdown += 0.01
             sleep(0.01)
             # do nothing
         drive.stop()
 
-        if (good_luminance == True):
+        if (good_luminance() == True):
             #intended overshoot to get to the center of the tape
             #should be modified to rely on the intensity of light with a max value similar to the one in this if clause
             drive.on_for_seconds(left_motor, right_motor, 0.1)
@@ -88,11 +88,11 @@ def find_line():
     left_motor = SpeedPercent(50)
     right_motor = SpeedPercent(25)
     turn_amount = 10
-    while(good_luminance == False):
+    while(good_luminance() == False):
         timer_countdown = 0
 
         drive.on_for_seconds(left_motor, right_motor, 1, block=False)
-        while(good_luminance == False and timer_countdown < 0.1*turn_amount):
+        while(good_luminanc()) == False and timer_countdown < 0.1*turn_amount):
             timer_countdown += 0.01
             sleep(0.01)
             # do nothing
@@ -109,7 +109,7 @@ def main():
     #color_sensor.calibrate_white()
     
     while True:
-        while(good_luminance == True):
+        while(good_luminance() == True):
             drive.on(SpeedPercent(50), SpeedPercent(50))
             rgb = color_sensor.rgb
             if (yellow_color(rgb) == True):
