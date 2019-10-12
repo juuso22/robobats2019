@@ -91,17 +91,20 @@ class LineFollowerTest:
 
         return False
 
-    def start(self):
-        print("Falling on line")
+    def run(self):
+        print("Dummy run method. Did not have time to adapt to framework (yet).")
 
     def stop(self):
         self.steering_drive.off()
         self.color_sensor.off()
 
-    def run(self):
+    def start(self):
         direction = 1
         max_turn_steps = LineFollowerTest.SEARCH_MAX_STEPS
         yellow_count = 0
+
+        #We need to go forward first
+        #self.steering_drive.on_for_seconds(0, SpeedPercent(-2 * LineFollowerTest.FORWARD_SPEED), LineFollowerTest.TIME_STEP * 8, False)
 
         while True:
             if direction == 1:
@@ -121,7 +124,8 @@ class LineFollowerTest:
                 self.steering_drive.on_for_seconds(0, SpeedPercent(LineFollowerTest.FORWARD_SPEED * 2), LineFollowerTest.TIME_STEP * 8, False)
                 self.steering_drive.on_for_degrees(-100, SpeedPercent(-LineFollowerTest.SEARCH_SPEED), 90, False)
 
-            if self.color_sensor.color == 2:
+            if self.color_sensor.rgb()[0] < 160 and self.color_sensor.rgb()[1] < 160 and self.color_sensor.rgb()[2] > 240:
+                print("Victory!")
                 break
 
             found = False
@@ -144,7 +148,7 @@ def main():
     colorsensor = ColorSensor(address=INPUT_1)
     colorsensor.calibrate_white()
     follower = LineFollowerTest(movesteering, colorsensor)
-    follower.run()
+    follower.start()
 
 if __name__ == "__main__":
     main()
