@@ -23,7 +23,7 @@ class LineFollowerTest:
         self.last_brightness = 1000
 
     def on_track(self):
-        global self.last_brightness
+        self.last_brightness
         red = self.color_sensor.red
         green = self.color_sensor.green
         blue = self.color_sensor.blue
@@ -81,7 +81,7 @@ class LineFollowerTest:
         return False
 
     def find_line(self, max_turn_steps):
-        global self.last_search_direction
+        self.last_search_direction
         if self.turn_and_seek(max_turn_steps, self.last_search_direction):
             return True
 
