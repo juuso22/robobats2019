@@ -3,11 +3,14 @@ import websockets
 import json
 from asyncio import TimeoutError
 from ev3dev2.motor import MoveSteering, MediumMotor, OUTPUT_A, OUTPUT_B, OUTPUT_C
+from ev3dev2.sensor.lego import ColorSensor
+from ev3dev2.sensor import INPUT_1
 
 
 async def on_connect(socket, path):
     movesteering = MoveSteering(OUTPUT_A, OUTPUT_B)
     fork = MediumMotor(OUTPUT_C)
+    color_sensor = ColorSensor(address=INPUT_1)
 
     while True:
         try:
@@ -33,6 +36,8 @@ async def on_connect(socket, path):
                         fork.on(-100)
                     elif move == 'g':
                         fork.on(100)
+                    elif move == 'c':
+                        print(color_sensor.color_name)
                     elif move == 'stop':
                         movesteering.off()
                         fork.off()
