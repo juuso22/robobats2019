@@ -9,14 +9,17 @@ from websockets.exceptions import ConnectionClosed
 from remote_control import RemoteControl
 from fixed_mode import FixedMode
 from round_obstacle import RoundObstacle
+from line_follower import LineFollower
 
 async def on_connect(socket, path):
 
     try:
         movesteering = MoveSteering(OUTPUT_A, OUTPUT_B)
+        colorsensor = MoveSteering(INPUT_1)
         fork = MediumMotor(OUTPUT_C)
         remote_control = RemoteControl(socket, movesteering, fork)
         fixed_mode = FixedMode(socket, movesteering)
+        line_follower = LineFollower(movesteering, colorsensor)
 
         mode = remote_control
         #mode = fixed_mode
@@ -49,7 +52,8 @@ async def on_connect(socket, path):
                 #     if mode_number != old_number:
                 #         mode.stop()
                 #         if mode_number == 1:
-                #             print("1")
+                #             mode = line_follower
+                #             mode.start()
                 #         elif mode_number == 2:
                 #             print("2")
                 #         elif mode_number == 3:
@@ -62,7 +66,7 @@ async def on_connect(socket, path):
                 #             mode = remote_control
                                 # start repl
                 #             mode.start()
-                
+
     except ConnectionClosed:
         pass
 
