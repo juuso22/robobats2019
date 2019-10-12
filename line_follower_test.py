@@ -129,7 +129,6 @@ class LineFollowerTest:
                 max_turn_steps = max_turn_steps * 2
 
             if found:
-                self.check_for_mode_change()
                 continue
 
             print('Lost it')
