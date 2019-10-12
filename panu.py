@@ -67,10 +67,10 @@ def backtrack(direction):
 
         turn_amount *= 2
 
-        # if (last_backtrack_direction == "left"):
-        #     last_backtrack_direction = "right"
-        # else:
-        #     last_backtrack_direction = "left"
+        if (right_motor > left_motor):
+            last_backtrack_direction = "right"
+        else:
+            last_backtrack_direction = "left"
 
 
 def find_track():
