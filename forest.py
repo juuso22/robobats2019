@@ -17,3 +17,10 @@ class Forest:
         steering_drive.on_for_seconds(-40 * SPEED_MULTIPLIER,  -100 * SPEED_MULTIPLIER,  1.3 * TIME_MULTIPLIER)
         steering_drive.on_for_seconds(0 * SPEED_MULTIPLIER,  -100 * SPEED_MULTIPLIER,  0.8 * TIME_MULTIPLIER)
         steering_drive.on_for_seconds(40 * SPEED_MULTIPLIER,  -100 * SPEED_MULTIPLIER,  1 * TIME_MULTIPLIER)
+
+def main():
+    forest = Forest()
+    forest.woop
+
+if __name__ == "__main__":
+    main()
