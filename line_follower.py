@@ -124,7 +124,7 @@ class LineFollower:
                 self.steering_drive.on_for_seconds(0, SpeedPercent(LineFollower.FORWARD_SPEED * 2), LineFollower.TIME_STEP * 12, False)
                 self.steering_drive.on_for_degrees(25, -25, 90, False)
 
-            if self.color_sensor.rgb()[0] < 160 and self.color_sensor.rgb()[1] < 160 and self.color_sensor.rgb()[2] > 240:
+            if self.color_sensor.rgb[0] < 160 and self.color_sensor.rgb[1] < 160 and self.color_sensor.rgb[2] > 240:
                 print("Victory!")
                 break
 
