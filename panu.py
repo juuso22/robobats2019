@@ -20,6 +20,9 @@ atexit.register(goodbye)
 
 last_backtrack_direction = "left"
 
+def good_luminance():
+    return color_sensor.reflected_light_intensity > 50
+
 def good_color(rgb):
     return rgb[0] + rgb[1] + rgb[2] > 200
 
@@ -43,17 +46,15 @@ def backtrack(direction):
         left_motor = SpeedPercent(-35)
         right_motor = SpeedPercent(50)
 
-    rgb = color_sensor.rgb
-    while (good_color(rgb) == False and yellow_color(rgb) == False):
+    while (good_luminance == False):
 
         drive.on_for_seconds(left_motor, right_motor, 0.1*turn_amount, block=False)
         
         timer_countdown = 0
 
-        while ((good_color(rgb) == False and yellow_color(rgb) == False) and timer_countdown < 0.1*turn_amount):
+        while (good_luminance == False and timer_countdown < 0.1*turn_amount):
             timer_countdown += 0.01
             sleep(0.01)
-            rgb = color_sensor.rgb
             # do nothing
         drive.stop()
 
@@ -61,8 +62,6 @@ def backtrack(direction):
             #intended overshoot to get to the center of the tape
             #should be modified to rely on the intensity of light with a max value similar to the one in this if clause
             drive.on_for_seconds(left_motor, right_motor, 0.1)
-
-        rgb = color_sensor.rgb
 
         right_motor, left_motor = left_motor, right_motor
 
@@ -85,21 +84,21 @@ def force_back_and_turn_left():
     drive.on_for_seconds(100, 100, 0.5)
 
 def find_line():
-    rgb = color_sensor.rgb
+    drive.on_for_seconds(100,100,2)
     left_motor = SpeedPercent(50)
     right_motor = SpeedPercent(25)
-    while (good_color(rgb) == False):
+    turn_amount = 10
+    while(good_luminance == False):
         timer_countdown = 0
 
         drive.on_for_seconds(left_motor, right_motor, 1, block=False)
-        while ((good_color(rgb) == False and yellow_color(rgb) == False) and timer_countdown < 0.1*turn_amount):
+        while(good_luminanced == False and timer_countdown < 0.1*turn_amount):
             timer_countdown += 0.01
             sleep(0.01)
-            rgb = color_sensor.rgb
             # do nothing
+        drive.stop()
 
         right_motor, left_motor = left_motor, right_motor
-        rgb = color_sensor.rgb
 
     drive.stop(brake=True)
 
@@ -107,12 +106,11 @@ def find_line():
 def main():
     find_line()
 
-    color_sensor.calibrate_white()
+    #color_sensor.calibrate_white()
     
     while True:
-        rgb = color_sensor.rgb
-        while(good_color(rgb) == True):
-            drive.on(SpeedPercent(80), SpeedPercent(80))
+        while(good_luminance == True):
+            drive.on(SpeedPercent(50), SpeedPercent(50))
             rgb = color_sensor.rgb
             if (yellow_color(rgb) == True):
                 print(str(color_sensor.rgb))
