@@ -43,22 +43,25 @@ def backtrack(direction):
         left_motor = SpeedPercent(-70)
         right_motor = SpeedPercent(100)
 
-    while (good_color() == False):
+    rgb = color_sensor.rgb
+    while (good_color(rgb) == False or yellow_color(rgb) == False):
 
         drive.on_for_seconds(left_motor, right_motor, 0.1*turn_amount, block=False)
         
         timer_countdown = 0
 
-        while (good_color() == False and timer_countdown < 0.1*turn_amount):
+        while (good_color(rgb) == False and yellow_color(rgb) == False and timer_countdown < 0.1*turn_amount):
             timer_countdown += 0.01
             sleep(0.01)
             # do nothing
         drive.stop()
 
-        if (good_color() == True):
+        if (good_color(rgb) == True or yellow_color(rgb) == True):
             #intended overshoot to get to the center of the tape
             #should be modified to rely on the intensity of light with a max value similar to the one in this if clause
             drive.on_for_seconds(left_motor, right_motor, 0.1)
+
+        rgb = color_sensor.rgb
 
         right_motor, left_motor = left_motor, right_motor
 
