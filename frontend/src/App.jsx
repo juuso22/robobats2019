@@ -1,20 +1,7 @@
 import React from 'react';
 
-import SensorContainer from './SensorContainer.jsx';
-import ColourSensor from './ColourSensor.jsx';
-import InfraredSensor from './InfraredSensor.jsx';
-import TouchSensor from './TouchSensor.jsx';
-import Motors from './Motors.jsx';
-
-import styles from './styles/App.module.css';
 import { Stream } from 'stream';
-
-const ROBOT_IP_ADDR = '172.20.10.4';
-const ROBOT_PORT = 9000;
-
-const robotUri = `ws://${ROBOT_IP_ADDR}:${ROBOT_PORT}`;
-
-let websocket = null;
+import styles from './styles/App.module.css';
 
 const sensorData = {
   colour_sensor: {
@@ -106,7 +93,7 @@ class App extends React.Component {
     };
     console.log(steering);
     websocket.send(JSON.stringify(steering));
-  }
+  };
 
   onMotorStop = () => {
     const steering = {
@@ -115,7 +102,7 @@ class App extends React.Component {
     };
     console.log(steering);
     websocket.send(JSON.stringify(steering));
-  }
+  };
 
   onRightMotorSpeedChanged = () => {
     this.sendCommand('MOVETANK', this.state.data.motors);
@@ -161,53 +148,77 @@ class App extends React.Component {
       console.log(`Error; ${message.data}`);
     };
   }
-
-  render() {
-    const sensors = [
-      [
-        'Colour Sensor',
-        <ColourSensor
-          colours={this.state.data.colour_sensor}
-          onModeChange={this.onColourModeChange}
-          onCalibrate={this.onColourSensorCalibrate}
-        />,
-      ],
-      [
-        'Infrared Sensor',
-        <InfraredSensor distance={this.state.data.infrared_sensor} />,
-      ],
-      ['Touch Sensor', <TouchSensor pressed={this.state.data.touch_sensor} />],
-      [
-        'Motors',
-        <Motors
-          motorData={this.state.data.motors}
-          onChangeLeftValue={this.onLeftMotorValueChanged}
-          onChangeRightValue={this.onRightMotorValueChanged}
-          onChangeLeftSpeed={this.onLeftMotorSpeedChanged}
-          onChangeRightSpeed={this.onRightMotorSpeedChanged}
-          onChangeThrottle={this.onThrottleChanged}
-          onKeyDown={this.onMotorMove}
-          onKeyUp={this.onMotorStop}
-        />,
-      ],
-    ];
-    return (
-      <div className={styles.container}>
-        <main className={styles.sensors}>
-          {sensors.map(([title, sensor]) => (
-            <SensorContainer title={title}>{sensor}</SensorContainer>
-          ))}
-        </main>
-        <div className={styles.footer}>
-          <img
-            className={styles.logo}
-            src={require('./images/relex-logo-rgb.png')}
-            alt="Relex Solutions"
-          />
-        </div>
-      </div>
-    );
-  }
 }
 
-export default App;
+const ROBOT_IP = '123';
+const ROBOT_PORT = '9000';
+
+const robotUri = `ws://${ROBOT_IP}:${ROBOT_PORT}`;
+
+const websocket = new WebSocket(robotUri);
+websocket.onopen = () => {
+  console.log('CONNECTED');
+};
+websocket.onclose = () => {
+  console.log('DISCONNECTED');
+};
+websocket.onmessage = message => {
+  const sensorMessage = JSON.parse(message.data);
+  this.setState({
+    data: {
+      ...this.state.data,
+      colour_sensor: sensorMessage.colour_sensor,
+      infrared_sensor: sensorMessage.infrared_sensor,
+      touch_sensor: sensorMessage.touch_sensor,
+    },
+  });
+};
+websocket.onerror = message => {
+  console.log(`Error; ${message.data}`);
+};
+
+const sendCommand = command => {
+  websocket.send(JSON.stringify(command));
+};
+
+let pressedKeys = [];
+
+const onKeyDown = ({ key }) => {
+  switch (key) {
+    case 'a':
+    case 'd':
+    case 's':
+    case 'w': {
+      if (pressedKeys.includes(key)) return;
+      pressedKeys.push(key);
+      const command = {
+        type: 'MOVE',
+        move: key,
+      };
+      sendCommand(command);
+      break;
+    }
+    default:
+  }
+};
+
+const onKeyUp = ({ key }) => {
+  const command = {
+    type: 'MOVE',
+    move: 'stop',
+  };
+  sendCommand(command);
+  pressedKeys = pressedKeys.filter(x => x != key);
+};
+
+const SimpleController = () => (
+  <div
+    className={styles.container}
+    onKeyDown={onKeyDown}
+    onKeyUp={onKeyUp}
+    tabIndex="0"
+  />
+);
+export default SimpleController;
+
+// export default App;
