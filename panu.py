@@ -40,11 +40,11 @@ def backtrack(direction):
     last_backtrack_direction = direction
 
     if (direction == "left"):
-        left_motor = SpeedPercent(50)
-        right_motor = SpeedPercent(-50)
+        left_motor = SpeedPercent(30)
+        right_motor = SpeedPercent(-30)
     elif (direction == "right"):
-        left_motor = SpeedPercent(-50)
-        right_motor = SpeedPercent(50)
+        left_motor = SpeedPercent(-30)
+        right_motor = SpeedPercent(30)
 
     while (good_luminance() == False):
 
