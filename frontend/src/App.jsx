@@ -150,7 +150,7 @@ class App extends React.Component {
   }
 }
 
-const ROBOT_IP = '123';
+const ROBOT_IP = '192.168.2.3';
 const ROBOT_PORT = '9000';
 
 const robotUri = `ws://${ROBOT_IP}:${ROBOT_PORT}`;
@@ -187,7 +187,7 @@ const onKeyDown = ({ key }) => {
   switch (key) {
     case 'a':
     case 'd':
-    case 'a':
+    case 's':
     case 't':
     case 'g':
     case 'w': {
