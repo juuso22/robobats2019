@@ -27,7 +27,7 @@ def good_color(rgb):
     return rgb[0] + rgb[1] + rgb[2] > 200
 
 def yellow_color(rgb):
-    return rgb[2] < 50 and rgb[2] < rgb[0] / 1.5 and rgb[2] < rgb[1] / 1.5 and rgb[0] > 75
+    return rgb[2] < 50 and rgb[2] < rgb[0] / 2 and rgb[2] < rgb[1] / 2 and rgb[0] > 75
 
 def green_color():
     color = color_sensor.color
@@ -41,9 +41,9 @@ def backtrack(direction):
 
     if (direction == "left"):
         left_motor = SpeedPercent(50)
-        right_motor = SpeedPercent(-35)
+        right_motor = SpeedPercent(-50)
     elif (direction == "right"):
-        left_motor = SpeedPercent(-35)
+        left_motor = SpeedPercent(-50)
         right_motor = SpeedPercent(50)
 
     while (good_luminance() == False):
@@ -79,8 +79,8 @@ def find_track():
 def force_back_and_turn_left():
     drive.on_for_seconds(100,100,0.5)
     sleep(5.0)
-    drive.on_for_seconds(-100, -100, 2)
-    drive.on_for_seconds(100, -100, 0.75)
+    drive.on_for_seconds(-100, -100, 1.25)
+    drive.on_for_seconds(100, -100, 1.0)
     drive.on_for_seconds(100, 100, 0.5)
 
 def find_line():
