@@ -9,7 +9,7 @@ import time
 class LineFollower:
     TIME_STEP = 0.1
     SEARCH_MAX_STEPS = 8
-    FORWARD_SPEED = 50
+    FORWARD_SPEED = -50
     SEARCH_SPEED = 25
     STEPS_PER_SECOND = 1 / TIME_STEP
     LEFT = -1
@@ -112,7 +112,7 @@ class LineFollower:
             else:
                 print('Backward')
 
-            self.move_while_on_track(0, LineFollower.FORWARD_SPEED * direction)
+            self.move_while_on_track(0, LineFollower.FORWARD_SPEED * direction * 0.66)
 
             # Go back after seeing yellow (track-specific)
             print("Currently seeing: " + self.color_sensor.color_name)
@@ -122,8 +122,8 @@ class LineFollower:
                 break
             if self.color_sensor.color == 4: #Yellow
                 yellow_count = yellow_count + 1
-                self.steering_drive.on_for_seconds(0, SpeedPercent(LineFollower.FORWARD_SPEED * 2), LineFollower.TIME_STEP * 12, False)
-                self.steering_drive.on_for_degrees(25, -25, 90, False)
+                self.steering_drive.on_for_seconds(0, SpeedPercent(LineFollower.FORWARD_SPEED), LineFollower.TIME_STEP * 15, False)
+                self.steering_drive.on_for_degrees(25, -25, 360, False)
 
             if self.color_sensor.rgb[0] in range(130, 171) and self.color_sensor.rgb[1] in range(130, 171) and self.color_sensor.rgb[2] > 230:
                 print("Victory!")
