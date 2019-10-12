@@ -121,8 +121,8 @@ class LineFollowerTest:
                 break
             if self.color_sensor.color == 4: #Yellow
                 yellow_count = yellow_count + 1
-                self.steering_drive.on_for_seconds(0, SpeedPercent(LineFollowerTest.FORWARD_SPEED * 2), LineFollowerTest.TIME_STEP * 8, False)
-                self.steering_drive.on_for_degrees(-100, SpeedPercent(-LineFollowerTest.SEARCH_SPEED), 90, False)
+                self.steering_drive.on_for_seconds(0, SpeedPercent(LineFollowerTest.FORWARD_SPEED * 2), LineFollowerTest.TIME_STEP * 12, False)
+                self.steering_drive.on_for_degrees(25, -25, 90, False)
 
             if self.color_sensor.rgb()[0] < 160 and self.color_sensor.rgb()[1] < 160 and self.color_sensor.rgb()[2] > 240:
                 print("Victory!")
