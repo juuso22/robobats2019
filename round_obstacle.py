@@ -9,8 +9,8 @@ import code
 steering_drive = MoveSteering(OUTPUT_A, OUTPUT_B)
 # Params: Andle (-100 to 100), speed (percent, 0 to 100), seconds it drives.
 
-LEFT = -1
-RIGHT = 1
+LEFT = 1
+RIGHT = -1
 
 color_sensor = ColorSensor(address=INPUT_1)
 infrared_sensor = InfraredSensor(INPUT_2)
@@ -51,13 +51,16 @@ def wait_and_drive(direction, proximity, maxholes = 0, sleep_time = 0.3):
     time.sleep(sleep_time)
     print('CHARGE')
     drive_until_proximity(40, direction)
-# code.interact(local = locals())
 
-drive_until_proximity(40, 0)
-wait_and_drive(15 * RIGHT, 75, maxholes = 1, sleep_time = 0.5)
-drive_until_proximity(40, 0)
-wait_and_drive(0, 75, maxholes = 1, sleep_time = 0.5)
-wait_and_drive(0, 75, maxholes = 1, sleep_time = 0.5)
+
+def test():
+    drive_until_proximity(40, 0)
+    wait_and_drive(8 * RIGHT, 75, maxholes = 1, sleep_time = 0.5)
+    drive_until_proximity(40, 0)
+    wait_and_drive(0, 75, maxholes = 1, sleep_time = 0.5)
+    wait_and_drive(0, 75, maxholes = 1, sleep_time = 0.5)
+
+code.interact(local = locals())
 
 
 
