@@ -40,8 +40,6 @@ def backtrack(direction):
 
     turn_amount = 1
 
-    last_backtrack_direction = direction
-
     if (direction == "left"):
         left_motor = SpeedPercent(30)
         right_motor = SpeedPercent(-30)
@@ -61,19 +59,22 @@ def backtrack(direction):
             # do nothing
         drive.stop()
 
-        if (not good_luminance()):
+        if (good_luminance()):
             #intended overshoot to get to the center of the tape
             #should be modified to rely on the intensity of light with a max value similar to the one in this if clause
             drive.on_for_seconds(left_motor, right_motor, 0.1)
+            break
+        else:
+            right_motor, left_motor = left_motor, right_motor
 
-        right_motor, left_motor = left_motor, right_motor
+            turn_amount *= 2
 
-        turn_amount *= 2
+            if (direction == "left"):
+                direction = "right"
+            else:
+                direction = "left"
 
-      #  if (right_motor > left_motor):
-      #      last_backtrack_direction = "right"
-      #  else:
-      #      last_backtrack_direction = "left"
+    last_backtrack_direction = direction
 
 
 def find_track():
