@@ -6,11 +6,12 @@ from ev3dev2.wheel import EV3Tire
 import time
 import code
 
-class RoundObstacle(ms = MoveSteering(OUTPUT_A, OUTPUT_B), cs = ColorSensor(address=INPUT_1), isensor = InfraredSensor(INPUT_2)):
+class RoundObstacle:
 
-    steering_drive = ms
-    color_sensor = cs
-    infrared_sensor = isensor
+    def __init__(self, ms = MoveSteering(OUTPUT_A, OUTPUT_B), cs = ColorSensor(address=INPUT_1), isensor = InfraredSensor(INPUT_2)):
+        self.steering_drive = ms
+        self.color_sensor = cs
+        self.infrared_sensor = isensor
 
     LEFT = 1
     RIGHT = -1
