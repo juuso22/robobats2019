@@ -150,7 +150,7 @@ class App extends React.Component {
   }
 }
 
-const ROBOT_IP = '192.168.2.2';
+const ROBOT_IP = '192.168.2.3';
 const ROBOT_PORT = '9000';
 
 const robotUri = `ws://${ROBOT_IP}:${ROBOT_PORT}`;

@@ -26,6 +26,9 @@ def good_luminance():
 def good_color(rgb):
     return rgb[0] + rgb[1] + rgb[2] > 200
 
+def ola_yellow(rgb):
+    return rgb[0] in range(140, 170) and rgb[1] in range(90, 120) and rgb[2] in range(30, 40)
+
 def yellow_color(rgb):
     return rgb[2] < 50 and rgb[2] < rgb[0] / 2 and rgb[2] < rgb[1] / 2 and rgb[0] > 75
 
@@ -87,7 +90,7 @@ def force_back_and_turn_left():
     last_backtrack_direction = 'left'
 
 def find_line():
-    drive.on_for_seconds(100,100,2)
+    drive.on_for_seconds(100,100,4)
     left_motor = SpeedPercent(50)
     right_motor = SpeedPercent(25)
     turn_amount = 10
@@ -109,14 +112,14 @@ def find_line():
 def main():
     find_line()
 
-    #color_sensor.calibrate_white()
+    # color_sensor.calibrate_white()
     
     while True:
         while(good_luminance() == True):
             drive.on(SpeedPercent(50), SpeedPercent(50))
             rgb = color_sensor.rgb
-            if (yellow_color(rgb) == True):
-                print(str(color_sensor.rgb))
+            if (ola_yellow(rgb) == True):
+                print(str(rgb))
                 drive.stop(brake=True)
                 force_back_and_turn_left()
         drive.stop(brake=True)
