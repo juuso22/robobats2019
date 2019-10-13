@@ -6,14 +6,15 @@ from ev3dev2.wheel import EV3Tire
 import time
 import code
 
-class RoundObstacle:
-    steering_drive = MoveSteering(OUTPUT_A, OUTPUT_B)
+class RoundObstacle(ms = MoveSteering(OUTPUT_A, OUTPUT_B), cs = ColorSensor(address=INPUT_1), isensor = InfraredSensor(INPUT_2)):
+
+    steering_drive = ms
+    color_sensor = cs
+    infrared_sensor = isensor
 
     LEFT = 1
     RIGHT = -1
 
-    color_sensor = ColorSensor(address=INPUT_1)
-    infrared_sensor = InfraredSensor(INPUT_2)
 
     def drive_until_proximity(self, proximity_goal = 40, direction = 0):
         if (self.infrared_sensor.proximity > proximity_goal):
