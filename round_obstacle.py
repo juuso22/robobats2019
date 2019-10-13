@@ -59,7 +59,7 @@ class RoundObstacle:
         self.wait_and_sleep(75, maxholes = 1, sleep_time = 0.4)
         self.drive_until_proximity(direction = 8 * self.RIGHT)
 
-    def second_kiekko_left(self, maxholes = 1):
+    def second_kiekko(self, maxholes = 1):
         self.drive_until_proximity()
         self.wait_and_sleep(70, maxholes, sleep_time = 0.5)
         self.drive_until_proximity(direction = 8 * self.RIGHT)
@@ -67,24 +67,32 @@ class RoundObstacle:
 
     def third_kiekko(self, prox = 75):
         self.drive_until_proximity()
-        self.wait_and_sleep(prox, maxholes = 1, sleep_time = 0.4)
-        self.drive_until_proximity(60)
+        self.wait_and_sleep(prox, maxholes = 1, sleep_time = 1)
+        self.drive_until_proximity()
 
     def start(self):
-        self.steering_drive.on_for_seconds(-40, -100, 2)
+        self.steering_drive.on_for_seconds(-30, -100, 2)
         self.first_kiekko()
         self.second_kiekko(maxholes = 1)
         self.third_kiekko()
-        self.steering_drive.on_for_rotations(100,100,0.8)
-        self.steering_drive.on_for_seconds(0, 100, 4)
+
 
     def start_2(self):
         self.steering_drive.on_for_seconds(-40, -100, 2)
         self.first_kiekko()
         self.second_kiekko(maxholes = 0)
         self.third_kiekko()
-        self.steering_drive.on_for_rotations(100,100,0.8)
-        self.steering_drive.on_for_seconds(0, 100, 4)
+
+
+    def drive_until_white_or_wall(self):
+        self.steering_drive.on(0, -100)
+        while (True):
+            if (self.color_sensor.color_name == 'White'):
+                break
+            if (self.infrared_sensor.proximity > 50):
+                break
+
+        self.steering_drive.off()
 
 def main():
     code.interact(local = locals())

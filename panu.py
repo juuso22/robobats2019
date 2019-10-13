@@ -80,12 +80,13 @@ def find_track():
     backtrack(last_backtrack_direction)
 
 def force_back_and_turn_left():
+    if (not yellow_color(color_sensor.rgb)):
+        return
     drive.on_for_seconds(100,100,0.5)
-    sleep(5.0)
+    sleep(10.0)
     drive.on_for_seconds(-100, -100, 1)
     drive.on_for_seconds(100, -100, 1.0)
-    while (not good_luminance()):
-        drive.on(80, 80)
+    drive.on_for_seconds(100, 100, 1)
     drive.stop(brake=True)
     last_backtrack_direction = 'left'
 
@@ -109,8 +110,9 @@ def find_line():
     drive.stop(brake=True)
 
 
-def main():
-    find_line()
+def main(is_find_line = True):
+    if is_find_line:
+        find_line()
 
     # color_sensor.calibrate_white()
     
@@ -118,7 +120,7 @@ def main():
         while(good_luminance() == True):
             drive.on(SpeedPercent(50), SpeedPercent(50))
             rgb = color_sensor.rgb
-            if (ola_yellow(rgb) == True):
+            if (yellow_color(rgb) == True):
                 print(str(rgb))
                 drive.stop(brake=True)
                 force_back_and_turn_left()
